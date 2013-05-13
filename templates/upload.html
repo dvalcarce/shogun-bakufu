@@ -6,10 +6,22 @@
 
         <h3>Uploaded Documents</h3>
         {% if documents %}
-            <table class="table table-hover">
-            {% for document in documents %}
-                <tr><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></tr>
-            {% endfor %}
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Rows</th>
+                        <th>Columns</th>
+                    </tr>
+                <tbody>
+                {% for document in documents %}
+                    <tr>
+                        <th><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></th>
+                        <th>{{ document.rows }}</th>
+                        <th>{{ document.cols }}</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
         {% else %}
                 <p>No documents.</p>
