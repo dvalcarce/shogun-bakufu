@@ -10,6 +10,7 @@
                 <thead>
                     <tr>
                         <th>File</th>
+                        <th>Type</th>
                         <th>Rows</th>
                         <th>Columns</th>
                     </tr>
@@ -17,6 +18,7 @@
                 {% for document in documents %}
                     <tr>
                         <th><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></th>
+                        <th>{{ document.filetype }}</th>
                         <th>{{ document.rows }}</th>
                         <th>{{ document.cols }}</th>
                     </tr>

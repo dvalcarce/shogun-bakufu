@@ -1,10 +1,16 @@
 import csv
+import mimetypes
 
 from django.db import models
 
 
 class Document(models.Model):
+    """
+    Document class.
+    Saves an uploaded file and its data.
+    """
     docfile = models.FileField(upload_to='csv')
+    filetype = models.CharField(max_length=20, null=True, blank=True)
     rows = models.IntegerField(null=True)
     cols = models.IntegerField(null=True)
 
@@ -17,7 +23,13 @@ class Document(models.Model):
         Factory method.
         Use this method for Document instantiation instead of __init__.
         """
+        # Save document
         document = Document(docfile=docfile)
+
+        # Get MIME type from document name
+        document.filetype = mimetypes.guess_type(docfile.name, strict=False)[0]
+
+        # Get number of rows and columns of the uploaded file
         try:
             csvfile = csv.reader(docfile, delimiter=',', quotechar='|')
             data = list(csvfile)

@@ -20,6 +20,9 @@ def home(request):
 
 
 def upload(request):
+    """
+    File upload view
+    """
     # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
