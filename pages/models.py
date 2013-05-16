@@ -1,5 +1,6 @@
 import csv
 import mimetypes
+import os
 
 from django.db import models
 
@@ -16,6 +17,15 @@ class Document(models.Model):
 
     def __unicode__(self):
         return u"document"
+
+    def delete(self, *args, **kwargs):
+        """
+        Delete Document from DB and disk
+        """
+        # Delete from disk
+        os.remove(self.docfile.path)
+        # Delete from DB
+        super(Document, self).delete(*args, **kwargs)
 
     @classmethod
     def create(self, docfile):
