@@ -12,7 +12,7 @@ import json
 footer = "© 2013 Shogun Toolbox Foundation"
 
 
-def home(request):
+def login(request):
     """
     Renders homepage
     """

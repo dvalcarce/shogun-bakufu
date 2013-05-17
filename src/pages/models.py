@@ -2,6 +2,7 @@ import csv
 import mimetypes
 import os
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -14,6 +15,7 @@ class Document(models.Model):
     filetype = models.CharField(max_length=20, null=True, blank=True)
     rows = models.IntegerField(null=True)
     cols = models.IntegerField(null=True)
+    uploader = models.ForeignKey(User)
 
     def __unicode__(self):
         return u"document"
