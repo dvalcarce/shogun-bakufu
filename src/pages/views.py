@@ -16,7 +16,7 @@ def home(request):
     """
     Renders homepage
     """
-    c = {'title': "Homepage", 'footer': footer}
+    c = {'title': "Homepage", 'footer': footer, 'request': request}
 
     return render_to_response('mainpage.html', c)
 

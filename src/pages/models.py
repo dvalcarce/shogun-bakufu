@@ -28,7 +28,7 @@ class Document(models.Model):
         super(Document, self).delete(*args, **kwargs)
 
     @classmethod
-    def create(self, docfile):
+    def create(cls, docfile):
         """
         Factory method.
         Use this method for Document instantiation instead of __init__.
