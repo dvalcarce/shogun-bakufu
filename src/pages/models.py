@@ -24,10 +24,10 @@ class Document(models.Model):
         """
         Delete Document from DB and disk
         """
-        # Delete from disk
-        os.remove(self.docfile.path)
         # Delete from DB
         super(Document, self).delete(*args, **kwargs)
+        # Delete from disk
+        os.remove(self.docfile.path)
 
     @classmethod
     def create(cls, docfile):
@@ -50,5 +50,7 @@ class Document(models.Model):
         except csv.Error:
             document.rows = 0
             document.cols = 0
+
+        (document.uploader, _) = User.objects.get_or_create(username='test')
 
         return document
