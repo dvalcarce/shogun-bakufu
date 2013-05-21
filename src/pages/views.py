@@ -18,7 +18,7 @@ def login(request):
     """
     c = {'title': "Homepage", 'footer': footer, 'request': request}
 
-    return render_to_response('mainpage.html', c)
+    return render_to_response('main.html', c)
 
 
 def upload(request):

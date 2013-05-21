@@ -1,5 +1,6 @@
-{% extends "base.html" %}
-    {% block head %}
+{% extends "page.html" %}
+
+{% block head %}
     <script src="/static/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript">
         // This function is called by 'Remove' buttons
@@ -43,55 +44,51 @@
             }
         });
     </script>
-    {% endblock %}
+{% endblock %}
 
-    {% block body %}
-    <div class="container">
+{% block body %}
+    <h1>Bakufu</h1>
 
-        <h1>Bakufu</h1>
-
-        <h3>Uploaded Documents</h3>
-        <div>
-            <table class="table table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>File</th>
-                        <th>Type</th>
-                        <th>Rows</th>
-                        <th>Columns</th>
-                        <th>Actions</th>
+    <h3>Uploaded Documents</h3>
+    <div>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>File</th>
+                    <th>Type</th>
+                    <th>Rows</th>
+                    <th>Columns</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if documents %}
+                {% for document in documents %}
+                    <tr id="row_{{ document.pk }}">
+                        <td>{{ document.pk }}</td>
+                        <td><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></td>
+                        <td>{{ document.filetype }}</td>
+                        <td>{{ document.rows }}</td>
+                        <td>{{ document.cols }}</td>
+                        <td><button class="btn btn-mini btn-danger" type="button" onclick="remove_file('{{ document.pk }}')">Remove</button></td>
                     </tr>
-                </thead>
-                <tbody>
-                {% if documents %}
-                    {% for document in documents %}
-                        <tr id="row_{{ document.pk }}">
-                            <td>{{ document.pk }}</td>
-                            <td><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></td>
-                            <td>{{ document.filetype }}</td>
-                            <td>{{ document.rows }}</td>
-                            <td>{{ document.cols }}</td>
-                            <td><button class="btn btn-mini btn-danger" type="button" onclick="remove_file('{{ document.pk }}')">Remove</button></td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
-                </tbody>
-            </table>
-        </div>
-
-        <h3>Upload your csv</h3>
-
-        <form action="{% url "pages.views.upload" %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>{{ form.non_field_errors }}</p>
-            <p>{{ form.docfile.label_tag }}</p>
-            <p>
-                {{ form.docfile.errors }}
-                {{ form.docfile }}
-            </p>
-            <p><input class="btn" type="submit" value="Upload" /></p>
-        </form>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
     </div>
 
-    {% endblock %}
+    <h3>Upload your csv</h3>
+
+    <form action="{% url "pages.views.upload" %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+        <p>{{ form.docfile.label_tag }}</p>
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }}
+        </p>
+        <p><input class="btn" type="submit" value="Upload" /></p>
+    </form>
+{% endblock %}
