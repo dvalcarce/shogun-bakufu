@@ -2,15 +2,49 @@
 {% load i18n %}
 
 {% block body %}
-<h1>Login</h1>
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <input type="submit" class="btn" value="{% trans 'Log in' %}" />
-  <input type="hidden" name="next" value="{{ next }}" />
+<h1>{% trans 'Log in' %}</h1>
+<form class="form-horizontal" action="{{ app_path }}" method="post" id="login-form">
+    {% csrf_token %}
+    <div class="control-group">
+        <div class="control-label">
+            <label for="id_username" class="required">{% trans 'Username' %}</label>
+        </div>
+        <div class="controls">
+            {{ form.username }}
+            {% if not form.this_is_the_login_form.errors %}
+                    <span class="help-inline">
+                        {{ form.username.errors|striptags }}
+                    </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            <label for="id_password" class="required">{% trans 'Password' %}</label>
+        </div>
+        <div class="controls">
+            {{ form.password }}
+            {% if not form.this_is_the_login_form.errors %}
+                    <span class="help-inline">
+                        {{ form.password.errors|striptags }}
+                    </span>
+            {% endif %}
+        </div>
+        <input type="hidden" name="this_is_the_login_form" value="1"/>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <a href="{% url 'auth_password_reset' %}">{% trans 'Forgotten your password or username?' %}</a>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <input type="submit" value="{% trans 'Log in' %}" class="btn"/>
+        </div>
+    </div>
 </form>
-
-<p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
-<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
+<script type="text/javascript">
+    document.getElementById('id_username').focus()
+</script>
 {% endblock %}

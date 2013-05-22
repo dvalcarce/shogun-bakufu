@@ -10,7 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'pages.views.login'),
+    url(r'^$', 'pages.views.index'),
     url(r'^upload/$', 'pages.views.upload'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

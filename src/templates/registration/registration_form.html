@@ -2,10 +2,70 @@
 {% load i18n %}
 
 {% block body %}
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <input type="submit" class="btn" value="{% trans 'Submit' %}" />
+<h1>{% trans 'Register' %}</h1>
+<form class="form-horizontal" action="{{ app_path }}" method="post" id="login-form">
+    {% csrf_token %}
+    <div class="control-group">
+        <div class="control-label">
+            <label for="id_username" class="required">{% trans 'Username' %}</label>
+        </div>
+        <div class="controls">
+            {{ form.username }}
+            {% if not form.this_is_the_login_form.errors %}
+                    <span class="help-inline">
+                        {{ form.username.errors|striptags }}
+                    </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            <label for="id_email" class="required">{% trans 'Email' %}</label>
+        </div>
+        <div class="controls">
+            {{ form.email }}
+            {% if not form.this_is_the_login_form.errors %}
+                    <span class="help-inline">
+                        {{ form.email.errors|striptags }}
+                    </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            <label for="id_password1" class="required">{% trans 'Password' %}</label>
+        </div>
+        <div class="controls">
+            {{ form.password1 }}
+            {% if not form.this_is_the_login_form.errors %}
+                    <span class="help-inline">
+                        {{ form.password1.errors|striptags }}
+                    </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            <label for="id_password2" class="required">{% trans 'Repeat password' %}</label>
+        </div>
+        <div class="controls">
+            {{ form.password2 }}
+            {% if not form.this_is_the_login_form.errors %}
+                    <span class="help-inline">
+                        {{ form.password2.errors|striptags }}
+                    </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <input type="submit" value="{% trans 'Register' %}" class="btn"/>
+        </div>
+    </div>
 </form>
+<script type="text/javascript">
+    document.getElementById('id_username').focus()
+</script>
+
 {% endblock %}
