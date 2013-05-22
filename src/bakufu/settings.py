@@ -142,7 +142,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'pages',
+    'registration',
 )
+
+# This is the number of days users will have to activate
+# their accounts after registering.
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -20,5 +20,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # Login
-    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    (r'^login/$', 'django.contrib.auth.views.login'),
+    (r'^accounts/', include('registration.backends.simple.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
