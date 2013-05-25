@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -18,20 +19,23 @@ def index(request):
     """
     c = {'title': "Homepage", 'footer': footer, 'request': request}
 
-    return render_to_response('main.html', c)
+    return render_to_response('main.html', c, context_instance=RequestContext(request))
 
 
 def upload(request):
     """
     File upload view
     """
+    if not request.user.is_authenticated():
+        raise PermissionDenied
+
     if request.is_ajax():
         return _upload_ajax(request)
     elif request.method == 'POST':
         # Handle file upload
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
-            newdoc = Document.create(docfile=request.FILES['docfile'])
+            newdoc = Document.create(docfile=request.FILES['docfile'], user=request.user)
             newdoc.save()
 
             # Redirect to the document list after POST

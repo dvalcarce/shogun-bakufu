@@ -30,13 +30,13 @@ class Document(models.Model):
         os.remove(self.docfile.path)
 
     @classmethod
-    def create(cls, docfile):
+    def create(cls, docfile, user):
         """
         Factory method.
         Use this method for Document instantiation instead of __init__.
         """
         # Save document
-        document = Document(docfile=docfile)
+        document = Document(docfile=docfile, uploader=user)
 
         # Get MIME type from document name
         document.filetype = mimetypes.guess_type(docfile.name, strict=False)[0]
@@ -50,7 +50,5 @@ class Document(models.Model):
         except csv.Error:
             document.rows = 0
             document.cols = 0
-
-        (document.uploader, _) = User.objects.get_or_create(username='test')
 
         return document

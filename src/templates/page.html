@@ -36,10 +36,17 @@
                     <li><a href="/">{% trans 'About' %}</a></li>
                     <!--<li><a href="/admin">Admin</a></li>-->
                 </ul>
+                {% if user.is_authenticated %}
+                <form class="navbar-form pull-right">
+                    <a href="/accounts/logout" class="btn">{% trans 'Log out' %}</a>
+                </form>
+                {% else %}
                 <form class="navbar-form pull-right">
                     <a href="/accounts/login?next={% firstof request.path '/' %}" class="btn">{% trans 'Log in' %}</a>
                     <a href="/accounts/register?next={% firstof request.path '/' %}" class="btn">{% trans 'Register' %}</a>
                 </form>
+                {% endif %}
+
             </div>
             <!--/.nav-collapse -->
         </div>
